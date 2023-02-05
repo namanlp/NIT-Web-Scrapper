@@ -83,3 +83,53 @@ doc.add_page_break()
 doc.save('output.docx')
 print("Done NIT Uttarakhand")
 
+# ============================================================================================= 2. NIT Puducherry =============================================================================================
+
+doc.add_heading("2. NIT Puducherry", 0)
+doc.add_paragraph("Full Name \n Designation \n Email ID \n Contact Number \n Research area")
+
+url_list = ["https://nitpy.ac.in/academics/departments/civil/faculty",
+            "https://nitpy.ac.in/academics/departments/cse/faculty",
+            "https://nitpy.ac.in/academics/departments/ece/faculty",
+            "https://nitpy.ac.in/academics/departments/eee/faculty",
+            "https://nitpy.ac.in/academics/departments/mech/faculty"
+            ]
+
+for page in url_list:
+    driver.get(page)
+    driver.refresh()
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    s = soup.find_all("app-department-faculty-view")
+    for faculty in s:
+        facultyData = faculty.find_all("p")
+
+        # Faculty Name
+        fac_name = facultyData[0].text.split(":")[1].strip()
+
+        # Designation
+        fac_designation = facultyData[1].text.split(":")[1].strip()
+
+        # E-Mail
+        fac_email = facultyData[2].text.split(":")[1].strip()
+
+        # Phone Number
+        fac_phone = facultyData[3].text.split(":")[1].strip()
+
+        fac_research = "-"
+
+        if len(facultyData) >= 5:
+            try:
+                fac_research = facultyData[4].text.split(":")[1].strip()
+            except:
+                fac_research = "-"
+            finally:
+                pass
+        doc.add_paragraph("\n==============================================================\n" +
+                          fac_name + " \n" + fac_designation + " \n " + fac_email + " \n " +
+                          fac_phone + " \n " + fac_research)
+
+doc.save('output.docx')
+doc.add_page_break()
+print("Done NIT Puducherry")
+
+
