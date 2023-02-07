@@ -11,7 +11,7 @@ NIT Scrapped in this project are:
 3. NIT Arunachal Pradesh
 4. NIT Sikkim
 5. NIT Delhi
-6.NIT Mizoram
+6. NIT Mizoram
 7. NIT Nagaland
 8. NIT Andhra Pradesh
 """
