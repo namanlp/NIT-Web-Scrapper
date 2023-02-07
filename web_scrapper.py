@@ -132,4 +132,47 @@ doc.save('output.docx')
 doc.add_page_break()
 print("Done NIT Puducherry")
 
+# ============================================================================================= 3. NIT Arunachal Pradesh =============================================================================================
+
+doc.add_heading("3. NIT Arunachal Pradesh", 0)
+doc.add_paragraph("Full Name \n Designation \n Email ID \n Contact Number \n Research area")
+
+url_list = ["https://www.nitap.ac.in/department/faculty?faculty=33b1f5929e",
+            "https://www.nitap.ac.in/department/faculty?faculty=1dbf504017",
+            "https://www.nitap.ac.in/department/faculty?faculty=8345cde791",
+            "https://www.nitap.ac.in/department/faculty?faculty=66badff20c",
+            "https://www.nitap.ac.in/department/faculty?faculty=cad3da575a",
+            "https://www.nitap.ac.in/department/faculty?faculty=89f0915482"
+            ]
+
+for page in url_list:
+    driver.get(page)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    s = soup.find_all("div", class_="gdlr-core-personnel-list-content-wrap")
+    for faculty in s:
+
+        # Faculty Name
+        fac_name = faculty.find_all("h3")[0].text.strip()
+
+        # Designation
+        fac_designation = faculty.find_all("div", class_="gdlr-core-personnel-list-position gdlr-core-info-font gdlr-core-skin-caption")[0].text.strip()
+
+        # E-Mail
+        fac_email = faculty.find_all("a")[0].text.strip()
+
+        # Phone Number
+        fac_phone = faculty.find_all("div", class_="kingster-personnel-info-list kingster-type-phone")[0].text.strip()
+
+        # Research Area
+        fac_research = faculty.find_all("p")[-1].text.strip()
+
+        doc.add_paragraph("\n==============================================================\n" +
+                          fac_name + " \n" + fac_designation + " \n " + fac_email + " \n " +
+                          fac_phone + " \n " + fac_research)
+
+doc.save('output.docx')
+doc.add_page_break()
+print("Done NIT Arunachal Pradesh")
+
+
 
