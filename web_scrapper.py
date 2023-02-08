@@ -175,4 +175,43 @@ doc.add_page_break()
 print("Done NIT Arunachal Pradesh")
 
 
+# ============================================================================================= 4. NIT Sikkim =============================================================================================
+
+doc.add_heading("4. NIT Sikkim", 0)
+doc.add_paragraph("Full Name \n Designation \n Email ID \n Contact Number \n Research area")
+
+url_list = ["https://cse.nitsikkim.ac.in/people.php",
+            "https://ece.nitsikkim.ac.in/people.php",
+            "https://eee.nitsikkim.ac.in/people.php",
+            "https://me.nitsikkim.ac.in/people.php",
+            "https://ce.nitsikkim.ac.in/people.php",
+            ]
+
+for page in url_list:
+    driver.get(page)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    s = soup.find_all("div", class_="card-body")
+    for faculty in s:
+
+        # Faculty Name
+        fac_name = faculty.find_all("h5")[0].text.strip()
+
+        # Designation
+        fac_designation = faculty.find_all("h6")[0].text.strip()
+
+        # E-Mail
+        fac_email = faculty.find_all("p", class_="card-text")[0].text.split("+")[0].strip()
+
+        # # Phone Number
+        fac_phone = "+" + faculty.find_all("p", class_="card-text")[0].text.split("+")[-1].strip()
+
+        # Research Area
+        fac_research = faculty.find_all("p", class_="card-text")[-1].text.strip()
+        doc.add_paragraph("\n==============================================================\n" +
+                          fac_name + " \n" + fac_designation + " \n " + fac_email + " \n " +
+                          fac_phone + " \n " + fac_research)
+
+doc.save('output.docx')
+doc.add_page_break()
+print("Done NIT Sikkim")
 
