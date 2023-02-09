@@ -215,3 +215,29 @@ doc.save('output.docx')
 doc.add_page_break()
 print("Done NIT Sikkim")
 
+# ============================================================================================= 5. NIT Delhi =============================================================================================
+
+doc.add_heading("5. NIT Delhi", 0)
+doc.add_paragraph("Full Name \n Designation \n Email ID \n Contact Number \n Research area")
+
+url_list = ["https://nitdelhi.ac.in/?page_id=11979",
+            "https://nitdelhi.ac.in/?page_id=11977",
+            "https://nitdelhi.ac.in/?page_id=11985",
+            "https://nitdelhi.ac.in/?page_id=11981",
+            "https://nitdelhi.ac.in/?page_id=11993"
+            ]
+
+for page in url_list:
+    driver.get(page)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    s = soup.find_all("tr")
+    for faculty in s:
+
+        if len(faculty.find_all("a")) == 0:
+            continue
+        doc.add_paragraph("\n==============================================================\n" +
+                          faculty.find_all("td")[1].text)
+
+doc.save('output.docx')
+doc.add_page_break()
+print("Done NIT Delhi")
