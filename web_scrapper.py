@@ -241,3 +241,40 @@ for page in url_list:
 doc.save('output.docx')
 doc.add_page_break()
 print("Done NIT Delhi")
+
+#============================================================================================= 6. NIT Mizoram =============================================================================================
+
+doc.add_heading("6. NIT Mizoram", 0)
+doc.add_paragraph("Full Name \n Designation \n Email ID \n Contact Number \n Research area")
+
+url_list = ["https://www.nitmz.ac.in/Department_FaculyList.aspx?nDeptID=cg",
+            "https://www.nitmz.ac.in/Department_FaculyList.aspx?nDeptID=ec",
+            "https://www.nitmz.ac.in/Department_FaculyList.aspx?nDeptID=ck",
+            "https://www.nitmz.ac.in/Department_FaculyList.aspx?nDeptID=ci",
+            "https://www.nitmz.ac.in/Department_FaculyList.aspx?nDeptID=cm"
+            ]
+
+for page in url_list:
+    driver.get(page)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    s = soup.find_all("table", class_="DataGrid")[0].find_all("tr")
+    for faculty in s:
+        if len(faculty.find_all("a")) == 0:
+            continue
+        # Faculty Name
+        fac_name = faculty.find_all("a")[0].text.strip()
+
+        # Designation
+        fac_designation = faculty.find_all("td")[1].text.strip()
+
+        # E-Mail
+        fac_email = faculty.find_all("td")[2].text.strip()
+
+        doc.add_paragraph("\n==============================================================\n" +
+                          fac_name + " \n" + fac_designation + " \n " + fac_email + " \n " +
+                          "-" + " \n " + "-")
+
+doc.save('output.docx')
+doc.add_page_break()
+print("Done NIT Mizoram")
+
