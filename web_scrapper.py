@@ -278,3 +278,39 @@ doc.save('output.docx')
 doc.add_page_break()
 print("Done NIT Mizoram")
 
+#============================================================================================= 7. NIT Nagaland =============================================================================================
+
+doc.add_heading("7. NIT Nagaland", 0)
+doc.add_paragraph("Full Name \n Designation \n Email ID \n Contact Number \n Research area")
+
+url_list = ["https://www.nitnagaland.ac.in/index.php/cse-people/cse-faculty",
+            "https://www.nitnagaland.ac.in/index.php/eee-people/eee-faculty",
+            "https://www.nitnagaland.ac.in/index.php/ece-people/ece-faculty",
+            "https://www.nitnagaland.ac.in/index.php/eie-people/eie-faculty",
+            ]
+
+for page in url_list:
+    driver.get(page)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    s = soup.find_all("div", class_="fp-testimonials")
+    for faculty in s:
+        if len(faculty.find_all("b")) <= 1:
+            continue
+
+        # Faculty Name
+        fac_name = faculty.find_all("b")[0].text.strip()
+        # Designation
+        fac_designation = faculty.find_all("b")[1].text.strip()
+
+        # E-Mail
+        fac_email = faculty.text.split("\n")[5].strip()
+
+        # Research Area
+        fac_research = faculty.text.split("\n")[6].strip()
+        doc.add_paragraph("\n==============================================================\n" +
+                          fac_name + " \n" + fac_designation + " \n " + fac_email + " \n " +
+                          "-" + " \n " + fac_research)
+
+doc.save('output.docx')
+doc.add_page_break()
+print("Done NIT Nagaland")
