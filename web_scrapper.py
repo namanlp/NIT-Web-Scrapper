@@ -314,3 +314,26 @@ for page in url_list:
 doc.save('output.docx')
 doc.add_page_break()
 print("Done NIT Nagaland")
+
+# ============================================================================================= 8. NIT Andhra Pradesh =============================================================================================
+
+doc.add_heading("8. NIT Andhra Pradesh", 0)
+doc.add_paragraph("Full Name \n Designation \n Email ID \n Contact Number \n Research area")
+
+url_list = ["https://nitandhra.ac.in/main/fm",
+            ]
+
+for page in url_list:
+    driver.get(page)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    s = soup.find_all("div", class_="panel-body")
+    for faculty in s:
+        if len(faculty.find_all("font")) != 1:
+            continue
+        fac_data = faculty.text.strip().split("Contact:")
+        doc.add_paragraph("\n==============================================================\n" +
+                          fac_data[0] + " \n " + fac_data[1])
+
+doc.save('output.docx')
+print("Done NIT Andhra Pradesh")
+print("\n\nDone Scrapping.\nThank You")
